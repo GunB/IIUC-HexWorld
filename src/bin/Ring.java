@@ -26,7 +26,7 @@ public class Ring {
 
     public Ring(int intRing, int intPoint) {
         this.intRing = intRing;
-        SearchRing(intPoint);
+        intPointsRing = SearchRing(intPoint, 1, 0).intPointsRing;
     }
 
     private void DefineRing() {
@@ -45,37 +45,43 @@ public class Ring {
             for (int i = intPointsRing[0]; i < intPointsRing[1]; i++) {
                 arrayList.add(i);
             }
-            
+
             ArrayList<Integer> lstPointsVertices = new ArrayList<>();
-            
+            //<editor-fold defaultstate="collapsed" desc="Describiendo los vertices del Hexagono">
+            lstPointsVertices.add(1 - 1);
+            lstPointsVertices.add(lstPointsVertices.get(lstPointsVertices.size() - 1) + pointPerSide + 1);
+            lstPointsVertices.add(lstPointsVertices.get(lstPointsVertices.size() - 1) + pointPerSide + 1);
+            lstPointsVertices.add(lstPointsVertices.get(lstPointsVertices.size() - 1) + pointPerSide + 1);
+            lstPointsVertices.add(lstPointsVertices.get(lstPointsVertices.size() - 1) + pointPerSide + 1);
+            lstPointsVertices.add(lstPointsVertices.get(lstPointsVertices.size() - 1) + pointPerSide + 1);
+            //</editor-fold>
+
             for (int i = 0; i < arrayList.size(); i++) {
-                
-                if(i == lstPointsVertices.get(0)){
-                    lstPoints.put(0, new Point(intRing, this, (pointPerSide + 1) / 2, -intRing));
-                }else if(i < lstPointsVertices.get(1) && i > lstPointsVertices.get(0)){
+
+                if (i == lstPointsVertices.get(0)) {
+                    lstPoints.put(arrayList.get(i), new Point(intRing, this, (pointPerSide + 1) / 2, -intRing));
+                } else if (i < lstPointsVertices.get(1) && i > lstPointsVertices.get(0)) {
                     
-                    
-                    
-                }else if(i == lstPointsVertices.get(1)){
-                    
-                }else if(i < lstPointsVertices.get(2) && i > lstPointsVertices.get(1)){
-                    
-                }else if(i == lstPointsVertices.get(2)){
-                    
-                }else if(i < lstPointsVertices.get(3) && i > lstPointsVertices.get(2)){
-                    
-                }else if(i == lstPointsVertices.get(3)){
-                    
-                }else if(i < lstPointsVertices.get(4) && i > lstPointsVertices.get(3)){
-                    
-                }else if(i == lstPointsVertices.get(4)){
-                    
-                }else if(i < lstPointsVertices.get(5) && i > lstPointsVertices.get(4)){
-                    
-                }else if(i == lstPointsVertices.get(5)){
-                    
+                } else if (i == lstPointsVertices.get(1)) {
+
+                } else if (i < lstPointsVertices.get(2) && i > lstPointsVertices.get(1)) {
+
+                } else if (i == lstPointsVertices.get(2)) {
+
+                } else if (i < lstPointsVertices.get(3) && i > lstPointsVertices.get(2)) {
+
+                } else if (i == lstPointsVertices.get(3)) {
+
+                } else if (i < lstPointsVertices.get(4) && i > lstPointsVertices.get(3)) {
+
+                } else if (i == lstPointsVertices.get(4)) {
+
+                } else if (i < lstPointsVertices.get(5) && i > lstPointsVertices.get(4)) {
+
+                } else if (i == lstPointsVertices.get(5)) {
+
                 }
-                
+
                 lstPoints.put(arrayList.get(i),
                         new Point(intRing, this, 0, 0));
             }
@@ -83,37 +89,21 @@ public class Ring {
         }
     }
 
-    public static int[] PointsOfRing(int intPosibleRing) {
+    public static Ring SearchRing(int intPoint, int intPosibleRing, int intStart) {
         int[] intRingEx = new int[2];
-
-        intRingEx[1] = 6 + ((intPosibleRing - 1) * 6);
-
-        if (intPosibleRing > 1) {
-            intRingEx[0] = 6 + ((intPosibleRing - 2) * 6) + 1;
-        } else {
-            intRingEx[0] = 1;
+        if (intPoint == 0) {
+            intRingEx[0] = intRingEx[1] = 0;
+            return new Ring(intPoint, intRingEx);
         }
 
-        return intRingEx;
-    }
+        intRingEx[0] = intStart + 1;
+        intRingEx[1] = intStart + 6 + ((intPosibleRing - 1) * 6);
 
-    private void SearchRing(int intPoint) {
-        if (intPoint == 0) {
-            intPointsRing[0] = 0;
-            intPointsRing[1] = 0;
+        if (intPoint >= intRingEx[0] && intPoint <= intRingEx[1]) {
+            return new Ring(intPoint, intRingEx);
         } else {
-            boolean isRingable = false;
-            int cont = 1;
-
-            while (!isRingable) {
-                int[] PointsOfRing = Ring.PointsOfRing(cont);
-
-                if (intPoint >= PointsOfRing[0] && intPoint <= PointsOfRing[1]) {
-                    isRingable = true;
-                    intPointsRing = PointsOfRing;
-                }
-                cont++;
-            }
+            intPosibleRing++;
+            return SearchRing(intPoint, intPosibleRing, intRingEx[1]);
         }
     }
 
