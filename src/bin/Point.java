@@ -11,40 +11,11 @@ package bin;
  */
 public class Point {
     int intPoint;
-    int intRing;
-    
-    int[] intPointsRing;
+    Ring objRing;
 
     public Point(int intPoint) {
         this.intPoint = intPoint;
-        
+        objRing = new Ring(intPoint, intPoint);
     }
     
-    private void SearchRing(){
-        if(intPoint == 0){
-            intRing = 0;
-        }else{
-            boolean isRingable = false;
-            int cont=1;
-            
-            while(!isRingable){
-                int[] PointsOfRing = PointsOfRing(cont);
-                
-                if(intPoint >= PointsOfRing[0] && intPoint <= PointsOfRing[1]){
-                    isRingable = true;
-                    intPointsRing = PointsOfRing;
-                    intRing = cont;
-                }
-            }
-        }
-    }
-    
-    private int[] PointsOfRing(int intPosibleRing){
-        int[] intRingEx = new int[2];
-        
-        intRingEx[1] = 6 + ( (intPosibleRing -1) * 6 );
-        intRingEx[0] = intRingEx[1] - (6 + ( (intPosibleRing -1) * 6 )) + 1;
-        
-        return null;
-    }
 }
