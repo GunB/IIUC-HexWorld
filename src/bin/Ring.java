@@ -33,7 +33,7 @@ public class Ring {
         //intRingEx[1] = 6 + ( (intPosibleRing -1) * 6 );
         int pointPerSide = ((intRing - 1));
         if (pointPerSide < 0) {
-            lstPoints.put(0, new Point(intRing, this, 0, 0));
+            lstPoints.put(0, new Point(0, this, 0, 0));
         } else {
             double intStart = 1;
             if (pointPerSide % 2 != 0) {
@@ -56,34 +56,45 @@ public class Ring {
             lstPointsVertices.add(lstPointsVertices.get(lstPointsVertices.size() - 1) + pointPerSide + 1);
             //</editor-fold>
 
+            Point lastPoint = null;
+            
             for (int i = 0; i < arrayList.size(); i++) {
 
                 if (i == lstPointsVertices.get(0)) {
-                    lstPoints.put(arrayList.get(i), new Point(intRing, this, (pointPerSide + 1) / 2, -intRing));
+                    lastPoint = new Point(arrayList.get(i), this, (pointPerSide + 1) / 2, -intRing);
+                    
                 } else if (i < lstPointsVertices.get(1) && i > lstPointsVertices.get(0)) {
+                                     
                     
                 } else if (i == lstPointsVertices.get(1)) {
+                    lastPoint = new Point(arrayList.get(i), this, intRing, 0);
 
                 } else if (i < lstPointsVertices.get(2) && i > lstPointsVertices.get(1)) {
+                    
 
                 } else if (i == lstPointsVertices.get(2)) {
+                    lastPoint = new Point(arrayList.get(i), this, (pointPerSide + 1) / 2, intRing);
 
                 } else if (i < lstPointsVertices.get(3) && i > lstPointsVertices.get(2)) {
 
                 } else if (i == lstPointsVertices.get(3)) {
+                    lastPoint = new Point(arrayList.get(i), this, -(pointPerSide + 1) / 2, intRing);
 
                 } else if (i < lstPointsVertices.get(4) && i > lstPointsVertices.get(3)) {
 
                 } else if (i == lstPointsVertices.get(4)) {
+                    lastPoint = new Point(arrayList.get(i), this, -intRing, 0);
 
                 } else if (i < lstPointsVertices.get(5) && i > lstPointsVertices.get(4)) {
 
                 } else if (i == lstPointsVertices.get(5)) {
+                    lastPoint = new Point(arrayList.get(i), this, -(pointPerSide + 1) / 2, -intRing);
 
+                } else if (i > lstPointsVertices.get(5)) {
+                    
                 }
-
-                lstPoints.put(arrayList.get(i),
-                        new Point(intRing, this, 0, 0));
+                
+                lstPoints.put(arrayList.get(i), lastPoint.clone());
             }
 
         }
