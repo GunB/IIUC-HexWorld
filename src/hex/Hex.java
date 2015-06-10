@@ -6,6 +6,7 @@
 package hex;
 
 import bin.Point;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 /**
@@ -29,7 +30,13 @@ public class Hex {
         
         Hex solving = new Hex().Run(Integer.parseInt(a), Integer.parseInt(b));
         
+        Double Distance = solving.Distance(solving.a, solving.b);
         
+        DecimalFormat df = new DecimalFormat("#.###"); 
+        
+        System.out.print(df.format(solving.b.getIntPoint() - solving.a.getIntPoint()));
+        System.out.print(" ");
+        System.out.print(df.format(Distance));
         
     }
 
@@ -38,6 +45,13 @@ public class Hex {
         b = new Point(intB);
 
         return this;
+    }
+    
+    public Double Distance(Point a, Point b){
+        
+        Double distance = Math.sqrt( (Math.pow(b.getX() - a.getX(), 2)) + (Math.pow(b.getY() - a.getY(), 2)) );
+        
+        return distance;
     }
 
 }

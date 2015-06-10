@@ -18,7 +18,11 @@ public class Point {
 
     public Point(int intPoint) {
         this.intPoint = intPoint;
-        objRing = new Ring(intPoint, intPoint);
+        objRing = new Ring(intPoint);
+        Point tempPoint = objRing.GetPoint(intPoint);
+        
+        x = tempPoint.x;
+        y = tempPoint.y;
     }
 
     public Point(int intPoint, Ring objRing, double x, double y) {

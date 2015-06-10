@@ -7,6 +7,7 @@ package bin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  *
@@ -24,9 +25,11 @@ public class Ring {
         this.intPointsRing = intPointsRing;
     }
 
-    public Ring(int intRing, int intPoint) {
-        this.intRing = intRing;
-        intPointsRing = SearchRing(intPoint, 1, 0).intPointsRing;
+    public Ring(int intPoint) {
+        Ring SearchRing = SearchRing(intPoint, 1, 0);
+        intPointsRing = SearchRing.intPointsRing;
+        this.intRing = SearchRing.intRing;
+        DefineRing();
     }
 
     private void DefineRing() {
@@ -57,47 +60,118 @@ public class Ring {
             //</editor-fold>
 
             Point lastPoint = null;
-            
+
             for (int i = 0; i < arrayList.size(); i++) {
 
+                float distance = (((float)pointPerSide + 1) / 2);
+                
                 if (i == lstPointsVertices.get(0)) {
-                    lastPoint = new Point(arrayList.get(i), this, (pointPerSide + 1) / 2, -intRing);
-                    
-                } else if (i < lstPointsVertices.get(1) && i > lstPointsVertices.get(0)) {
-                                     
-                    
+                    lastPoint = new Point(arrayList.get(i), this,distance , -intRing);
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
+
                 } else if (i == lstPointsVertices.get(1)) {
                     lastPoint = new Point(arrayList.get(i), this, intRing, 0);
-
-                } else if (i < lstPointsVertices.get(2) && i > lstPointsVertices.get(1)) {
-                    
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(2)) {
-                    lastPoint = new Point(arrayList.get(i), this, (pointPerSide + 1) / 2, intRing);
-
-                } else if (i < lstPointsVertices.get(3) && i > lstPointsVertices.get(2)) {
+                    lastPoint = new Point(arrayList.get(i), this, distance, intRing);
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(3)) {
-                    lastPoint = new Point(arrayList.get(i), this, -(pointPerSide + 1) / 2, intRing);
-
-                } else if (i < lstPointsVertices.get(4) && i > lstPointsVertices.get(3)) {
+                    lastPoint = new Point(arrayList.get(i), this, -distance, intRing);
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(4)) {
                     lastPoint = new Point(arrayList.get(i), this, -intRing, 0);
-
-                } else if (i < lstPointsVertices.get(5) && i > lstPointsVertices.get(4)) {
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(5)) {
-                    lastPoint = new Point(arrayList.get(i), this, -(pointPerSide + 1) / 2, -intRing);
-
-                } else if (i > lstPointsVertices.get(5)) {
-                    
+                    lastPoint = new Point(arrayList.get(i), this, -distance, -intRing);
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
                 }
-                
-                lstPoints.put(arrayList.get(i), lastPoint.clone());
+
             }
 
+            for (int i = 0; i < arrayList.size(); i++) {
+
+                if (i == lstPointsVertices.get(0)) {
+                    lastPoint = lstPoints.get(arrayList.get(lstPointsVertices.get(0))).clone();
+                } else if (i < lstPointsVertices.get(1) && i > lstPointsVertices.get(0)) {
+                    Point a = lstPoints.get(arrayList.get(lstPointsVertices.get(0)));
+                    Point b = lstPoints.get(arrayList.get(lstPointsVertices.get(1)));
+                    
+                    double distancia = ((b.x - a.x) / (pointPerSide + 1));
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x + distancia, lastPoint.y - 1);
+
+                    
+                    
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
+                } else if (i == lstPointsVertices.get(1)) {
+                    lastPoint = lstPoints.get(arrayList.get(lstPointsVertices.get(1))).clone();
+                } else if (i < lstPointsVertices.get(2) && i > lstPointsVertices.get(1)) {
+                    Point a = lstPoints.get(arrayList.get(lstPointsVertices.get(1)));
+                    Point b = lstPoints.get(arrayList.get(lstPointsVertices.get(2)));
+                    
+                    double distancia = ((a.x - b.x) / (pointPerSide + 1));
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x - distancia, lastPoint.y + 1);
+
+                    
+                    
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
+                } else if (i == lstPointsVertices.get(2)) {
+                    lastPoint = lstPoints.get(arrayList.get(lstPointsVertices.get(2))).clone();
+                } else if (i < lstPointsVertices.get(3) && i > lstPointsVertices.get(2)) {
+                    double distancia = 1;
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x - distancia, lastPoint.y);
+                    
+                    
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
+                } else if (i == lstPointsVertices.get(3)) {
+                    lastPoint = lstPoints.get(arrayList.get(lstPointsVertices.get(3))).clone();
+                } else if (i < lstPointsVertices.get(4) && i > lstPointsVertices.get(3)) {
+                    Point a = lstPoints.get(arrayList.get(lstPointsVertices.get(3)));
+                    Point b = lstPoints.get(arrayList.get(lstPointsVertices.get(4)));
+                    
+                    double distancia = ((Math.abs(b.x) - Math.abs(a.x)) / (pointPerSide + 1));
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x - distancia, lastPoint.y - 1);
+                    
+                    
+                    
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
+                } else if (i == lstPointsVertices.get(4)) {
+                    lastPoint = lstPoints.get(arrayList.get(lstPointsVertices.get(4))).clone();
+                } else if (i < lstPointsVertices.get(5) && i > lstPointsVertices.get(4)) {
+                    Point a = lstPoints.get(arrayList.get(lstPointsVertices.get(4)));
+                    Point b = lstPoints.get(arrayList.get(lstPointsVertices.get(5)));
+                    
+                    double distancia = ((Math.abs(a.x) - Math.abs(b.x)) / (pointPerSide + 1));
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x + distancia, lastPoint.y - 1);
+                    
+                    
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
+                } else if (i == lstPointsVertices.get(5)) {
+                    lastPoint = lstPoints.get(arrayList.get(lstPointsVertices.get(5))).clone();
+                } else if (i > lstPointsVertices.get(5)) {
+                    double distancia = 1;
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x + distancia, lastPoint.y);
+                    
+                    
+                    lstPoints.put(arrayList.get(i), lastPoint.clone());
+                }
+
+            }
+
+            for (Entry<Integer, Point> entry : lstPoints.entrySet()) {
+                Integer key = entry.getKey();
+                Point value = entry.getValue();
+
+                //System.out.println(value.intPoint + " x:" + value.x + " y:" + value.y);
+            }
         }
+    }
+
+    public Point GetPoint(int intPoint) {
+        return lstPoints.get(intPoint);
     }
 
     public static Ring SearchRing(int intPoint, int intPosibleRing, int intStart) {
@@ -111,7 +185,7 @@ public class Ring {
         intRingEx[1] = intStart + 6 + ((intPosibleRing - 1) * 6);
 
         if (intPoint >= intRingEx[0] && intPoint <= intRingEx[1]) {
-            return new Ring(intPoint, intRingEx);
+            return new Ring(intPosibleRing, intRingEx);
         } else {
             intPosibleRing++;
             return SearchRing(intPoint, intPosibleRing, intRingEx[1]);
