@@ -168,7 +168,7 @@ public class Ring {
                 Integer key = entry.getKey();
                 Point value = entry.getValue();
 
-                //System.out.println(value.intPoint + " x:" + value.x + " y:" + value.y);
+                System.out.println(value.intPoint + " x:" + value.x + " y:" + value.y);
             }
         }
     }

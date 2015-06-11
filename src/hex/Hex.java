@@ -34,9 +34,9 @@ public class Hex {
         
         DecimalFormat df = new DecimalFormat("#.###"); 
         
-        System.out.print(df.format(solving.b.getIntPoint() - solving.a.getIntPoint()));
+        System.out.print(df.format(Math.abs(solving.b.getIntPoint() - solving.a.getIntPoint())));
         System.out.print(" ");
-        System.out.print(df.format(Distance));
+        System.out.print(df.format(Math.abs(Distance)));
         
     }
 
