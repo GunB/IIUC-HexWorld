@@ -60,37 +60,40 @@ public class Ring {
             //</editor-fold>
 
             Point lastPoint = null;
+            double avance = Math.sqrt(0.75);
 
             for (int i = 0; i < arrayList.size(); i++) {
 
                 float distance = (((float)pointPerSide + 1) / 2);
                 
                 if (i == lstPointsVertices.get(0)) {
-                    lastPoint = new Point(arrayList.get(i), this,distance , -intRing);
+                    lastPoint = new Point(arrayList.get(i), this,distance , -(intRing * avance));
                     lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(1)) {
-                    lastPoint = new Point(arrayList.get(i), this, intRing, 0);
+                    lastPoint = new Point(arrayList.get(i), this, (intRing * avance), 0);
                     lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(2)) {
-                    lastPoint = new Point(arrayList.get(i), this, distance, intRing);
+                    lastPoint = new Point(arrayList.get(i), this, distance, (intRing * avance));
                     lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(3)) {
-                    lastPoint = new Point(arrayList.get(i), this, -distance, intRing);
+                    lastPoint = new Point(arrayList.get(i), this, -distance, (intRing * avance));
                     lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(4)) {
-                    lastPoint = new Point(arrayList.get(i), this, -intRing, 0);
+                    lastPoint = new Point(arrayList.get(i), this, -(intRing * avance), 0);
                     lstPoints.put(arrayList.get(i), lastPoint.clone());
 
                 } else if (i == lstPointsVertices.get(5)) {
-                    lastPoint = new Point(arrayList.get(i), this, -distance, -intRing);
+                    lastPoint = new Point(arrayList.get(i), this, -distance, -(intRing * avance));
                     lstPoints.put(arrayList.get(i), lastPoint.clone());
                 }
 
             }
+            
+            
 
             for (int i = 0; i < arrayList.size(); i++) {
 
@@ -101,7 +104,7 @@ public class Ring {
                     Point b = lstPoints.get(arrayList.get(lstPointsVertices.get(1)));
                     
                     double distancia = ((b.x - a.x) / (pointPerSide + 1));
-                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x + distancia, lastPoint.y - 1);
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x + distancia, lastPoint.y + avance);
 
                     
                     
@@ -113,7 +116,7 @@ public class Ring {
                     Point b = lstPoints.get(arrayList.get(lstPointsVertices.get(2)));
                     
                     double distancia = ((a.x - b.x) / (pointPerSide + 1));
-                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x - distancia, lastPoint.y + 1);
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x - distancia, lastPoint.y + avance);
 
                     
                     
@@ -133,7 +136,7 @@ public class Ring {
                     Point b = lstPoints.get(arrayList.get(lstPointsVertices.get(4)));
                     
                     double distancia = ((Math.abs(b.x) - Math.abs(a.x)) / (pointPerSide + 1));
-                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x - distancia, lastPoint.y - 1);
+                    lastPoint = new Point(arrayList.get(i), this, lastPoint.x - distancia, lastPoint.y - avance);
                     
                     
                     
